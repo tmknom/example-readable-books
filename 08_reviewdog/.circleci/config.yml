@@ -1,0 +1,70 @@
+version: 2.1
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - prepare
+      - prh:
+          requires:
+            - prepare
+      - redpen:
+          requires:
+            - prepare
+      - textlint:
+          requires:
+            - prepare
+
+jobs:
+  prepare:
+    docker:
+      - image: alpine/git:latest
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: .
+  prh:
+    docker:
+      - image: tmknom/prh:1.0.0
+    steps:
+      - install_ca_certificates
+      - install_git
+      - install_reviewdog
+      - attach_workspace:
+          at: .
+      - run: .circleci/scripts/prh.sh
+  redpen:
+    docker:
+      - image: tmknom/redpen:1.0.0
+    steps:
+      - install_ca_certificates
+      - install_git
+      - install_reviewdog
+      - attach_workspace:
+          at: .
+      - run: .circleci/scripts/redpen.sh
+  textlint:
+    docker:
+      - image: tmknom/textlint:1.0.0
+    steps:
+      - install_ca_certificates
+      - install_git
+      - install_reviewdog
+      - attach_workspace:
+          at: .
+      - run: .circleci/scripts/textlint.sh
+
+commands:
+  install_ca_certificates:
+    steps:
+      - run: apk --update add ca-certificates
+  install_git:
+    steps:
+      - run: apk --update add git
+  install_reviewdog:
+    steps:
+      - run: >
+          GITHUB_URL=https://raw.githubusercontent.com/reviewdog/reviewdog &&
+          INSTALL_URL=${GITHUB_URL}/master/install.sh &&
+          wget -O - -q ${INSTALL_URL} | sh -s
