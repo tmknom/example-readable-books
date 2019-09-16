@@ -1,0 +1,17 @@
+version: 2.1
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - prepare
+
+jobs:
+  prepare:
+    docker:
+      - image: alpine/git:latest
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: .
