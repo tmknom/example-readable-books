@@ -1,0 +1,3 @@
+rules:
+  - expected: RFC $1
+    pattern:  /RFC([0-9]+)/

@@ -1,0 +1,3 @@
+rules:
+  - expected: プルリクエスト
+    pattern: Pull Request

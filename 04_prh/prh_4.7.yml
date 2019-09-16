@@ -1,0 +1,3 @@
+rules:
+  - expected: Docker
+    pattern: Dokcer

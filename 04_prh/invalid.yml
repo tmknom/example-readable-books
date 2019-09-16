@@ -1,0 +1,5 @@
+rules:
+  - expected: CircleCI
+    specs:
+      - from: circleci
+        to:   circleCI
