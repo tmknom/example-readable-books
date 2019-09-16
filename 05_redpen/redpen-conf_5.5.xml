@@ -1,0 +1,7 @@
+<redpen-conf lang="ja">
+  <validators>
+    <validator name="CommaNumber">
+      <property name="max_num" value="2"/>
+    </validator>
+  </validators>
+</redpen-conf>
