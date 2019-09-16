@@ -1,0 +1,4 @@
+      - prepare:
+          filters:
+            branches:
+              ignore: master
